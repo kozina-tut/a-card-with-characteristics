@@ -57,7 +57,11 @@ player_characteristics = {
 
 names = ["charsheet1.svg", "charsheet2.svg", "charsheet3.svg", "charsheet4.svg", "charsheet5.svg", "charsheet6.svg", "charsheet7.svg", "charsheet8.svg", "charsheet9.svg", "charsheet10.svg"]
 
-file_operations.render_template("charsheet.svg", names[1], player_characteristics)
+for i in range(10):
+	file_operations.render_template("charsheet.svg", names[i], player_characteristics)
+	print(f"Файл {names[i]} создан!")
+
+
 
 
 
