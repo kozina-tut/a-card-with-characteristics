@@ -4,10 +4,6 @@ from faker import Faker
 
 fake = Faker("ru_RU")
 
-skills = ["Стремительный прыжок", "Электрический выстрел", "Ледяной удар", "Стремительный удар", "Кислотный взгляд", "Тайный побег", "Ледяной выстрел", "Огненный заряд"]
-random_skills = random.sample(skills,3)
-
-
 dictionary = {
     'а': 'а͠', 'б': 'б̋', 'в': 'в͒͠',
     'г': 'г͒͠', 'д': 'д̋', 'е': 'е͠',
@@ -34,12 +30,13 @@ dictionary = {
     ' ': ' '
 }
 
-for keys, values in dictionary.items():
-    random_skills[0] = random_skills[0].replace(keys, values)
-    random_skills[1] = random_skills[1].replace(keys, values)
-    random_skills[2] = random_skills[2].replace(keys, values)
+skills = ["Стремительный прыжок", "Электрический выстрел", "Ледяной удар", "Стремительный удар", "Кислотный взгляд", "Тайный побег", "Ледяной выстрел", "Огненный заряд"]
+names = ["charsheet1.svg", "charsheet2.svg", "charsheet3.svg", "charsheet4.svg", "charsheet5.svg", "charsheet6.svg", "charsheet7.svg", "charsheet8.svg", "charsheet9.svg", "charsheet10.svg"]
 
-player_characteristics = {
+for i in range(10):
+	random_skills = random.sample(skills,3)
+
+	player_characteristics = {
   "first_name": fake.first_name_male(),
   "last_name": fake.last_name_male(),
   "job": fake.job(),
@@ -54,11 +51,7 @@ player_characteristics = {
   "skill_3": random_skills[2]
 }
 
-
-names = ["charsheet1.svg", "charsheet2.svg", "charsheet3.svg", "charsheet4.svg", "charsheet5.svg", "charsheet6.svg", "charsheet7.svg", "charsheet8.svg", "charsheet9.svg", "charsheet10.svg"]
-
-for i in range(10):
-	file_operations.render_template("charsheet.svg", names[i], player_characteristics)
+	file_operations.render_template("template.svg", names[i], player_characteristics)
 	print(f"Файл {names[i]} создан!")
 
 
