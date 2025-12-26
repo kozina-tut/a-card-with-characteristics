@@ -1,8 +1,12 @@
 import file_operations
 import random
 from faker import Faker
+import os
 
 fake = Faker("ru_RU")
+
+player_cards = "player cards"
+os.makedirs(player_cards, exist_ok=True)
 
 dictionary = {
     'а': 'а͠', 'б': 'б̋', 'в': 'в͒͠',
@@ -20,7 +24,7 @@ dictionary = {
     'Г': 'Г͒͠', 'Д': 'Д̋', 'Е': 'Е',
     'Ё': 'Ё͒͠', 'Ж': 'Ж͒', 'З': 'З̋̋͠',
     'И': 'И', 'Й': 'Й͒͠', 'К': 'К̋̋',
-    'Л': 'Л̋͠', 'М': 'М͒͠', 'Н': 'Н͒',
+    'Л': 'Л̋͠', 'м': 'м͒͠', 'Н': 'Н͒',
     'О': 'О̋', 'П': 'П̋͠', 'Р': 'Р̋͠',
     'С': 'С͒', 'Т': 'Т͒', 'У': 'У͒͠',
     'Ф': 'Ф̋̋͠', 'Х': 'Х͒͠', 'Ц': 'Ц̋',
@@ -33,26 +37,34 @@ dictionary = {
 skills = ["Стремительный прыжок", "Электрический выстрел", "Ледяной удар", "Стремительный удар", "Кислотный взгляд", "Тайный побег", "Ледяной выстрел", "Огненный заряд"]
 names = ["charsheet1.svg", "charsheet2.svg", "charsheet3.svg", "charsheet4.svg", "charsheet5.svg", "charsheet6.svg", "charsheet7.svg", "charsheet8.svg", "charsheet9.svg", "charsheet10.svg"]
 
+
+
 for i in range(10):
-	random_skills = random.sample(skills,3)
+    random_skills = random.sample(skills, 3)
 
-	player_characteristics = {
-  "first_name": fake.first_name_male(),
-  "last_name": fake.last_name_male(),
-  "job": fake.job(),
-  "town": fake.city(),
-  "strength": random.randint(3, 18),
-  "agility": random.randint(3, 18),
-  "endurance": random.randint(3, 18),
-  "intelligence": random.randint(3, 18),
-  "luck": random.randint(3, 18),
-  "skill_1": random_skills[0],
-  "skill_2": random_skills[1],
-  "skill_3": random_skills[2]
-}
+    for j in range(3):
+        for key, value in dictionary.items():
+            random_skills[j] = random_skills[j].replace(key, value)
 
-	file_operations.render_template("template.svg", names[i], player_characteristics)
-	print(f"Файл {names[i]} создан!")
+
+    player_characteristics = {
+        "first_name": fake.first_name_male(),
+        "last_name": fake.last_name_male(),
+        "job": fake.job(),
+        "town": fake.city(),
+        "strength": random.randint(3, 18),
+        "agility": random.randint(3, 18),
+        "endurance": random.randint(3, 18),
+        "intelligence": random.randint(3, 18),
+        "luck": random.randint(3, 18),
+        "skill_1": random_skills[0],
+        "skill_2": random_skills[1],
+        "skill_3": random_skills[2]
+    }
+    
+
+    file_path = os.path.join(player_cards, names[i])
+    file_operations.render_template("charsheet.svg", file_path, player_characteristics)
 
 
 
